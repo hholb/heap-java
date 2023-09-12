@@ -28,10 +28,10 @@ public class MaxHeap<T extends Comparable<T>> {
 	}
 
 	/**
-	 * Returns the index of "left-child" of the element at the given index.
+	 * Returns the index of the left-child of the element at the given index.
 	 * 
 	 * @param i index to find left-child of
-	 * @return index of left-child of i
+	 * @return index of left-child of heap[i]
 	 */
 	private int leftChildOf(int i) {
 	    int result = (2 * i) + 1;
@@ -42,10 +42,10 @@ public class MaxHeap<T extends Comparable<T>> {
 	}
 
 	/**
-	 * Returns the index of "right-child" of the element at the given index.
+	 * Returns the index of the right-child of the element at the given index.
 	 * 
 	 * @param i index to find right-child of
-	 * @return index of right-child of i
+	 * @return index of right-child of heap[i]
 	 */
 	private int rightChildOf(int i) {
 	    int result = (2 * i) + 2;
@@ -61,14 +61,7 @@ public class MaxHeap<T extends Comparable<T>> {
 	 */
 	public void printMaxHeap() {
 		System.out.println("Heap size: " + this.heapsize);
-		String arr = "{";
-		for (int i = 0; i < this.heapsize; i++) {
-			if (i != heapsize - 1)
-				arr = arr + this.heap[i] + ", ";
-			else
-				arr = arr + this.heap[i] + "}";
-		}
-		System.out.println(arr);
+		System.out.println(java.util.Arrays.toString(this.heap));
 	}
 
 	/**
@@ -76,22 +69,26 @@ public class MaxHeap<T extends Comparable<T>> {
 	 * @param i index to begin heapifying.
 	 */
 	private void maxHeapify(int i) {
+		// determine largest element
 	    int left = leftChildOf(i);
 	    int right = rightChildOf(i);
 	    int largest = i;
 	    
-	    if (left != -1 && heap[left].compareTo(heap[largest]) > 0) {
+	    if (left != -1 && heap[left].compareTo(heap[largest]) > 0) { // left child is larger
 	        largest = left;
 	    }
 	    
-	    if (right != -1 && heap[right].compareTo(heap[largest]) > 0) {
+	    if (right != -1 && heap[right].compareTo(heap[largest]) > 0) { // right child is larger
 	        largest = right;
 	    }
 	    
-	    if (largest != i) {
+	    // swap and repair if needed
+	    if (largest != i) { // need to swap
 	        T tmp = heap[i];
 	        heap[i] = heap[largest];
 	        heap[largest] = tmp;
+	        
+	        // recursive call
 	        this.maxHeapify(largest);
 	    }
 	}
@@ -113,19 +110,19 @@ public class MaxHeap<T extends Comparable<T>> {
 		this.buildMaxHeap();
 
 	    for (int i = this.heapsize - 1; i >= 1; i--) {
-	        // Swap the root with the last element
+	        // remove the last element
 	        T tmp = this.heap[0];
 	        this.heap[0] = this.heap[i];
 	        this.heap[i] = tmp;
 
-	        // Shrink the heap
+	        // shrink the heap
 	        this.heapsize--;
 
-	        // Repair the heap
+	        // repair the heap
 	        this.maxHeapify(0);
 	    }
 	    
-	    // Restore heapsize from backup
+	    // restore heapsize from the backup
 	    this.heapsize = backupHeapSize;
 	}
 }

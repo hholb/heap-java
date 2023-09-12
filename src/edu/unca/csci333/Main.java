@@ -25,7 +25,7 @@ public class Main {
 			System.out.printf("===== TEST ARRAY %d =====\n", i + 1);;
 			System.out.println("Original Array:");
 			System.out.println(java.util.Arrays.toString(arr) + "\n");
-			MaxHeap h = new MaxHeap(arr);
+			MaxHeap<Integer> h = new MaxHeap(arr);
 			System.out.println("After the Heapening:");
 			h.printMaxHeap();
 			System.out.println();
